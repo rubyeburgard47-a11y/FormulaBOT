@@ -4,7 +4,7 @@ const http = require('http');
 // --- 1. Anti-Sleep Server ---
 const server = http.createServer((req, res) => {
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Class 12 MegaBot is Running 24/7!\n');
+    res.end('Class 12 Pro Folder Bot is Running 24/7!\n');
 });
 server.listen(process.env.PORT || 3000);
 
@@ -13,89 +13,140 @@ const token = process.env.TOKEN;
 const bot = new TelegramBot(token, {polling: true});
 
 // ==========================================
-// --- 3. MEGA DATA DICTIONARY (A to Z) ---
+// --- 3. DATA DICTIONARY (Har Chapter Alag) ---
 // ==========================================
+const botData = {
+    // 📐 MATHS CHAPTERS
+    m_mat: "*Matrices & Determinants:*\n1. Transpose: (A')' = A\n2. A(adj A) = |A|I\n3. Inverse: A⁻¹ = (1/|A|) * (adj A)",
+    m_cal: "*Calculus (Diff & Int):*\n1. d/dx(uv) = u.v' + v.u'\n2. ∫xⁿ dx = xⁿ⁺¹/(n+1) + C\n3. ∫eˣ dx = eˣ",
+    m_vec: "*Vectors & 3D:*\n1. Dot: a.b = |ab|cosθ\n2. Cross: a×b = |ab|sinθ n̂\n3. Distance Formula in 3D.",
 
-const megaData = {
-    // ⚡ PHYSICS (All 14 Chapters - Main Formulas)
-    phy_1: "*Ch 1: Charges & Fields*\n• Quantization: q = ne\n• Coulomb's Law: F = (1/4πε₀)(q₁q₂/r²)\n• Dipole Moment: p = q × 2a\n• Gauss Law: Φ = q_enclosed / ε₀",
-    phy_2: "*Ch 2: Potential & Capacitance*\n• Potential (point charge): V = kq/r\n• Capacitance: C = Q/V\n• Parallel Plate: C = ε₀A/d\n• Energy: U = 1/2 CV²",
-    phy_3: "*Ch 3: Current Electricity*\n• Drift Velocity: Vd = (eE/m)τ\n• Ohm's Law: V = IR\n• Wheatstone Bridge: P/Q = R/S",
-    phy_4: "*Ch 4: Moving Charges*\n• Biot-Savart: dB = (μ₀/4π)(I dl sinθ/r²)\n• Force on moving charge: F = q(v × B)\n• Radius of path: r = mv/qB",
-    phy_5: "*Ch 5-7: Magnetism, EMI & AC*\n• Faraday's Law: e = -dΦ/dt\n• Motional EMF: e = Bvl\n• LCR Impedance: Z = √[R² + (Xl - Xc)²]\n• Resonant freq: f = 1/(2π√LC)",
-    phy_8: "*Ch 8-10: EM Waves & Optics*\n• EM Wave speed: c = 1/√(μ₀ε₀)\n• Mirror/Lens: 1/f = 1/v ± 1/u\n• Prism: μ = sin((A+δm)/2) / sin(A/2)\n• YDSE Fringe Width: β = λD/d",
-    phy_11: "*Ch 11-14: Modern Physics*\n• Einstein Photoelectric: K_max = hν - Φ\n• De Broglie: λ = h/p\n• Bohr Radius: r = 0.529 (n²/Z) Å\n• Mass Defect: ΔE = Δmc²",
+    // ⚡ PHYSICS CHAPTERS
+    p_elec: "*Electrostatics:*\n1. Coulomb's Law: F = (1/4πε₀)(q₁q₂/r²)\n2. Gauss Law: Φ = q / ε₀\n3. Capacitance: C = ε₀A/d",
+    p_mag: "*Magnetism & EMI:*\n1. Biot-Savart: dB = (μ₀/4π)(I dl sinθ/r²)\n2. Faraday's Law: e = -dΦ/dt",
+    p_opt: "*Ray & Wave Optics:*\n1. Mirror/Lens: 1/f = 1/v ± 1/u\n2. YDSE Fringe Width: β = λD/d",
+    p_mod: "*Modern Physics:*\n1. Photoelectric: K_max = hν - Φ\n2. De Broglie: λ = h/p\n3. Mass Defect: ΔE = Δmc²",
 
-    // 🧪 CHEMISTRY (New Syllabus 10 Chapters)
-    chem_1: "*Ch 1: Solutions*\n• Molarity = Moles/Vol(L)\n• Raoult's Law: P = P⁰ * x\n• Elevation in B.P: ΔTb = i*Kb*m\n• Depression in F.P: ΔTf = i*Kf*m",
-    chem_2: "*Ch 2: Electrochemistry*\n• Nernst: E = E⁰ - (0.059/n)logQ\n• ΔG⁰ = -nFE⁰\n• Faraday 1st Law: W = ZIt",
-    chem_3: "*Ch 3: Chemical Kinetics*\n• Zero Order: [A] = [A]₀ - kt\n• 1st Order: k = (2.303/t)log([A]₀/[A])\n• Half Life (1st order): t½ = 0.693/k\n• Arrhenius: k = Ae^(-Ea/RT)",
-    chem_4: "*Ch 4-5: d/f Block & Coordination*\n• Magnetic Moment: μ = √[n(n+2)] BM\n• Lanthanoid Contraction: Size decreases due to poor shielding of 4f.\n• CFT: Δo splitting energy.",
-    chem_6: "*Ch 6: Haloalkanes/arenes*\n• SN1: 3° > 2° > 1° (Racemization)\n• SN2: 1° > 2° > 3° (Inversion)\n• Saytzeff Rule: Highly substituted alkene is major.",
-    chem_7: "*Ch 7-9: Organic Conversions*\n• Reimer-Tiemann: Phenol → Salicylaldehyde\n• Aldol Condensation: α-H required.\n• Cannizzaro: No α-H (HCHO).\n• Hoffmann Bromamide: Amide → 1° Amine (1 C less).",
-    chem_10: "*Ch 10: Biomolecules*\n• Glucose: Aldohexose (C6H12O6)\n• Peptide Bond: Connects amino acids (-CONH-).\n• DNA/RNA: ATGC vs AUGC base pairs.",
+    // 🧪 CHEMISTRY - PHYSICAL
+    c_p_sol: "*Solutions:*\n1. Raoult's Law: P = P⁰ * x\n2. Elevation in B.P: ΔTb = i*Kb*m\n3. Osmotic Pressure: π = CRT",
+    c_p_elec: "*Electrochemistry:*\n1. Nernst: E = E⁰ - (0.059/n)logQ\n2. Faraday 1st Law: W = ZIt",
+    c_p_kin: "*Chemical Kinetics:*\n1. 1st Order: k = (2.303/t)log([A]₀/[A])\n2. Half Life: t½ = 0.693/k",
 
-    // 📚 ENGLISH (Flamingo, Vistas & Writing Section)
-    eng_flam: "*Flamingo (Prose & Poetry):*\n1. *Last Lesson:* Linguistic chauvinism, importance of mother tongue.\n2. *Lost Spring:* Child labor, Saheb (ragpicker) & Mukesh (bangle maker).\n3. *Deep Water:* Overcoming fear of water.\n4. *Rattrap:* Human loneliness, goodness can be awakened by love.\n5. *Indigo:* Champaran movement, self-reliance.\n*Poetry:* \n• *My Mother at 66:* Fear of loss, aging.\n• *Keeping Quiet:* Introspection, peace.\n• *Thing of Beauty:* Nature's permanent joy.",
-    eng_vist: "*Vistas (Summaries):*\n1. *Third Level:* Escapism from modern stress (Charley's illusion).\n2. *Tiger King:* Satire on people in power, destiny is supreme.\n3. *Enemy:* Dr. Sadao's dilemma between patriotism and duty as a doctor.\n4. *On the Face of It:* Derry (burnt face) & Mr. Lamb (tin leg) - optimism vs pessimism.\n5. *Memories of Childhood:* Zitkala-Sa & Bama (marginalization & discrimination).",
-eng_write: "*Writing Section & Grammar Formats:*\n📝 *Notice (50 words):*\n[Box Box Box]\nNAME OF INSTITUTION\nNOTICE\nDate\nHeading\nBody (Target audience, Date, Time, Venue, Agenda)\nSign\nName & Designation\n\n📝 *Formal Letter:*\nSender's Add\nDate\nReceiver's Add\nSubject:\nSalutation (Sir/Madam),\nBody (Para 1: Intro, Para 2: Detail, Para 3: Conclusion/Request)\nYours faithfully/truly,\nName\n\n📝 *Article/Report:*\nHeading\nBy [Name]\nBody (Intro, Causes/Effects, Conclusion/Suggestions). Always use passive voice for Reports."
+    // 🧪 CHEMISTRY - ORGANIC
+    c_o_halo: "*Haloalkanes:*\n1. SN1: 3° > 2° > 1° (Racemization)\n2. SN2: 1° > 2° > 3° (Inversion)",
+    c_o_alc: "*Alcohols & Phenols:*\n1. Reimer-Tiemann: Phenol → Salicylaldehyde\n2. Kolbe's: Phenol → Salicylic Acid",
+    c_o_bio: "*Biomolecules:*\n1. Glucose: Aldohexose\n2. Proteins: Peptide bonds (-CONH-)",
+
+    // 📚 ENGLISH - FLAMINGO
+    e_f_last: "*The Last Lesson:*\nSummary: M. Hamel's last French class. Shows the pain of losing mother tongue and linguistic chauvinism. Franz realizes the value of his language too late.",
+    e_f_spring: "*Lost Spring:*\nSummary: Saheb (ragpicker looking for gold in garbage) and Mukesh (bangle maker in Firozabad). Highlights grinding poverty and child labor.",
+    e_f_water: "*Deep Water:*\nSummary: Douglas overcomes his hydrophobia (fear of water) step-by-step with a professional instructor. Theme: Willpower conquers fear.",
+
+    // 📚 ENGLISH - VISTAS
+    e_v_third: "*The Third Level:*\nSummary: Charley hallucinates a 3rd level at Grand Central Station. It's a psychological escape from modern-day stress, war, and worries.",
+    e_v_tiger: "*The Tiger King:*\nSummary: Maharaja of Pratibandapuram kills 99 tigers to avoid a prophecy, but dies because of a wooden toy tiger's splinter. Irony and satire on power.",
+    
+    // 📚 ENGLISH - WRITING
+    e_w_notice: "*Notice Writing Format:*\n[Make a Box]\nNAME OF SCHOOL\nNOTICE\nDate\nHeading\nBody (What, When, Where)\nSign\nName"
 };
 
 // ==========================================
-// --- 4. MENU SYSTEM (Main & Sub-menus) ---
+// --- 4. MENUS AND NAVIGATION ---
 // ==========================================
 
+// MAIN MENU
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const options = {
         reply_markup: {
             inline_keyboard: [
-                [{ text: '⚡ Physics (All Ch)', callback_data: 'menu_phy' }, { text: '🧪 Chemistry (All Ch)', callback_data: 'menu_chem' }],
-                [{ text: '📚 English (Full)', callback_data: 'menu_eng' }]
+                [{ text: '📐 Maths', callback_data: 'menu_math' }, { text: '⚡ Physics', callback_data: 'menu_phy' }],
+                [{ text: '🧪 Chemistry', callback_data: 'menu_chem' }, { text: '📚 English', callback_data: 'menu_eng' }]
             ]
         }
     };
-    bot.sendMessage(chatId, "🔥 *Class 12 Ultimate Brahmastra Bot* 🔥\nSaara syllabus yahan hai. Subject choose karo:", {parse_mode: "Markdown", ...options});
+    bot.sendMessage(chatId, "🔥 *Class 12 Ultimate Folder Bot* 🔥\nKaunsa subject padhna hai bhai?", {parse_mode: "Markdown", ...options});
 });
-
 bot.on('callback_query', (query) => {
     const chatId = query.message.chat.id;
     const data = query.data;
 
-    // --- SUB-MENUS ---
-    if (data === 'menu_phy') {
-        bot.sendMessage(chatId, "⚡ *Physics Units:*", {
-            parse_mode: "Markdown",
-            reply_markup: { inline_keyboard: [
-                [{ text: 'Ch 1: Charges/Fields', callback_data: 'phy_1' }, { text: 'Ch 2: Potential/Cap', callback_data: 'phy_2' }],
-                [{ text: 'Ch 3: Current Elec', callback_data: 'phy_3' }, { text: 'Ch 4: Moving Charges', callback_data: 'phy_4' }],
-                [{ text: 'Ch 5-7: Mag, EMI, AC', callback_data: 'phy_5' }, { text: 'Ch 8-10: Optics/EM', callback_data: 'phy_8' }],
-                [{ text: 'Ch 11-14: Modern Phy', callback_data: 'phy_11' }]
-            ]}
-        });
+    // --- SUBJECT MENUS ---
+    if (data === 'menu_math') {
+        bot.sendMessage(chatId, "📐 *Maths Chapters:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: 'Matrices & Det', callback_data: 'm_mat' }, { text: 'Calculus', callback_data: 'm_cal' }],
+            [{ text: 'Vectors & 3D', callback_data: 'm_vec' }, { text: '🔙 Back to Main', callback_data: 'go_back' }]
+        ]}});
+    }
+    else if (data === 'menu_phy') {
+        bot.sendMessage(chatId, "⚡ *Physics Chapters:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: 'Electrostatics', callback_data: 'p_elec' }, { text: 'Magnetism/EMI', callback_data: 'p_mag' }],
+            [{ text: 'Optics', callback_data: 'p_opt' }, { text: 'Modern Physics', callback_data: 'p_mod' }],
+            [{ text: '🔙 Back to Main', callback_data: 'go_back' }]
+        ]}});
     }
     else if (data === 'menu_chem') {
-        bot.sendMessage(chatId, "🧪 *Chemistry Units:*", {
-            parse_mode: "Markdown",
-            reply_markup: { inline_keyboard: [
-                [{ text: 'Ch 1: Solutions', callback_data: 'chem_1' }, { text: 'Ch 2: Electrochemistry', callback_data: 'chem_2' }],
-                [{ text: 'Ch 3: Kinetics', callback_data: 'chem_3' }, { text: 'Ch 4-5: In-Organic', callback_data: 'chem_4' }],
-                [{ text: 'Ch 6: Haloalkanes', callback_data: 'chem_6' }, { text: 'Ch 7-9: Organic Main', callback_data: 'chem_7' }],
-                [{ text: 'Ch 10: Biomolecules', callback_data: 'chem_10' }]
-            ]}
-        });
+        // Chemistry Section Divider
+        bot.sendMessage(chatId, "🧪 *Chemistry Sections:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: '⚗️ Physical Chemistry', callback_data: 'chem_physical' }],
+            [{ text: '🧬 Organic Chemistry', callback_data: 'chem_organic' }],
+            [{ text: '🔙 Back to Main', callback_data: 'go_back' }]
+        ]}});
     }
     else if (data === 'menu_eng') {
-        bot.sendMessage(chatId, "📚 *English (Core):*", {
-            parse_mode: "Markdown",
+        // English Section Divider
+        bot.sendMessage(chatId, "📚 *English Literature & Writing:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: '📖 Flamingo', callback_data: 'eng_flam' }, { text: '📘 Vistas', callback_data: 'eng_vist' }],
+            [{ text: '✍️ Writing Section', callback_data: 'eng_write' }],
+            [{ text: '🔙 Back to Main', callback_data: 'go_back' }]
+        ]}});
+    }
+
+    // --- CHEMISTRY SUB-MENUS ---
+    else if (data === 'chem_physical') {
+        bot.sendMessage(chatId, "⚗️ *Physical Chemistry:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: 'Solutions', callback_data: 'c_p_sol' }, { text: 'Electrochem', callback_data: 'c_p_elec' }],
+            [{ text: 'Kinetics', callback_data: 'c_p_kin' }, { text: '🔙 Chemistry Menu', callback_data: 'menu_chem' }]
+        ]}});
+    }
+    else if (data === 'chem_organic') {
+        bot.sendMessage(chatId, "🧬 *Organic Chemistry:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: 'Haloalkanes', callback_data: 'c_o_halo' }, { text: 'Alcohols/Phenols', callback_data: 'c_o_alc' }],
+            [{ text: 'Biomolecules', callback_data: 'c_o_bio' }, { text: '🔙 Chemistry Menu', callback_data: 'menu_chem' }]
+        ]}});
+    }
+
+    // --- ENGLISH SUB-MENUS ---
+    else if (data === 'eng_flam') {
+        bot.sendMessage(chatId, "📖 *Flamingo Chapters:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: 'The Last Lesson', callback_data: 'e_f_last' }, { text: 'Lost Spring', callback_data: 'e_f_spring' }],
+            [{ text: 'Deep Water', callback_data: 'e_f_water' }, { text: '🔙 English Menu', callback_data: 'menu_eng' }]
+        ]}});
+    }
+    else if (data === 'eng_vist') {
+        bot.sendMessage(chatId, "📘 *Vistas Chapters:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: 'The Third Level', callback_data: 'e_v_third' }, { text: 'The Tiger King', callback_data: 'e_v_tiger' }],
+            [{ text: '🔙 English Menu', callback_data: 'menu_eng' }]
+        ]}});
+    }
+    else if (data === 'eng_write') {
+        bot.sendMessage(chatId, "✍️ *Writing Section:*", { parse_mode: "Markdown", reply_markup: { inline_keyboard: [
+            [{ text: 'Notice Format', callback_data: 'e_w_notice' }],
+            [{ text: '🔙 English Menu', callback_data: 'menu_eng' }]
+        ]}});
+    }
+// --- GO BACK TO MAIN MENU ---
+    else if (data === 'go_back') {
+        bot.sendMessage(chatId, "Kaunsa subject padhna hai bhai?", {
             reply_markup: { inline_keyboard: [
-                [{ text: '📖 Flamingo (All)', callback_data: 'eng_flam' }, { text: '📘 Vistas (All)', callback_data: 'eng_vist' }],
-                [{ text: '✍️ Writing Section & Formats', callback_data: 'eng_write' }]
-            ]}
+                [{ text: '📐 Maths', callback_data: 'menu_math' }, { text: '⚡ Physics', callback_data: 'menu_phy' }],
+                [{ text: '🧪 Chemistry', callback_data: 'menu_chem' }, { text: '📚 English', callback_data: 'menu_eng' }]
+            ] }
         });
     }
-    // --- SENDING ACTUAL CONTENT ---
-    else if (megaData[data]) {
-        bot.sendMessage(chatId, megaData[data], {parse_mode: "Markdown"});
+
+    // --- FINAL DATA SENDING (Formulas & Summaries) ---
+    else if (botData[data]) {
+        bot.sendMessage(chatId, botData[data], {parse_mode: "Markdown"});
     }
 });
